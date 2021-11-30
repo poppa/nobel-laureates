@@ -2,30 +2,30 @@
 //  ContentView.swift
 //  NobelLaureates
 //
-//  Created by Pontus Östlund on 2021-11-27.
+//  Created by Pontus Östlund on 2021-11-28.
 //
 
 import SwiftUI
-import CoreData
+import Combine
 
 struct ContentView: View {
-  @Environment(\.managedObjectContext) private var viewContext
-
-  @FetchRequest(
-    sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-    animation: .default)
-  private var items: FetchedResults<Item>
+  @ObservedObject var networkManager: NetworkManager
 
   var body: some View {
     NavigationView {
-
+      List(networkManager.laureates.laureates, id: \.id) { laureate in
+        NavigationLink {
+          LaureateView(laureate: laureate)
+        } label: {
+          Text("\(laureate.firstname) \(laureate.surname ?? "(none)")")
+        }
+      }.navigationBarTitle("Laureates")
     }
   }
 }
 
-
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView(networkManager: NetworkManager(inMemory: true))
   }
 }
