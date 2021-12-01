@@ -1,0 +1,23 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "ts-node -P tsconfig.json index.ts",
+    "migrations:create": "typeorm migration:create -n laureates",
+    "migrations:gen": "ts-node ./node_modules/.bin/typeorm migration:generate -n laureates",
+    "migrations:run": "ts-node ./node_modules/.bin/typeorm migration:run"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.11",
+    "@types/yargs": "^17.0.7",
+    "axios": "^0.24.0",
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.0.2",
+    "ts-node": "^10.4.0",
+    "typeorm": "^0.2.41",
+    "typescript": "^4.5.2",
+    "yargs": "^17.2.1"
+  }
+}
